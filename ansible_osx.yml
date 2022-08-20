@@ -31,19 +31,9 @@
         name: "{{ item }}"
       ignore_errors: yes
       with_items:
-        - amazon-workspaces
-        - android-sdk
-        - android-studio
-        - displaylink
-        - docker
         - google-chrome
-        - iterm2
-        - ngrok
         - openvpn-connect
-        - postman
         - powershell        
-        - sublime-text
-        - visual-studio-code
         - zoom
 
     - name: "Install homebrew packages"
@@ -103,105 +93,105 @@
     #       with_items:
     #         - 497799835 # xcode
 
-    - name: Get the path to ZSH
-      become: false
-      local_action: command which zsh
-      register: zsh_path
+#     - name: Get the path to ZSH
+#       become: false
+#       local_action: command which zsh
+#       register: zsh_path
 
-    - name: "Ensure homebrew zsh is in allowed shells"
-      lineinfile:
-        path: /etc/shells
-        line: "{{ zsh_path.stdout }}"
-      become: true
+#     - name: "Ensure homebrew zsh is in allowed shells"
+#       lineinfile:
+#         path: /etc/shells
+#         line: "{{ zsh_path.stdout }}"
+#       become: true
 
-    - name: Install Oh My ZSH
-      shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-      args:
-        creates: "/Users/{{ lookup('env', 'USER') }}/.oh-my-zsh"
+#     - name: Install Oh My ZSH
+#       shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+#       args:
+#         creates: "/Users/{{ lookup('env', 'USER') }}/.oh-my-zsh"
 
-    - name: Set ZSH as the default shell
-      shell: chsh -s $(which zsh) {{ lookup('env', 'USER') }}
-      become: true
+#     - name: Set ZSH as the default shell
+#       shell: chsh -s $(which zsh) {{ lookup('env', 'USER') }}
+#       become: true
 
-    - name: "Create a default ZSH configuration"
-      template:
-        src: templates/.zshrc.j2
-        dest: /Users/{{ lookup('env', 'USER') }}/.zshrc
-        owner: "{{ lookup('env', 'USER') }}"
-        force: yes
+#     - name: "Create a default ZSH configuration"
+#       template:
+#         src: templates/.zshrc.j2
+#         dest: /Users/{{ lookup('env', 'USER') }}/.zshrc
+#         owner: "{{ lookup('env', 'USER') }}"
+#         force: yes
 
-    - name: Create a default VSCode configuration
-      template:
-        src: templates/vscode-settings.json.j2
-        dest: /Users/{{ lookup('env', 'USER') }}/Library/Application Support/Code/User/settings.json
-        owner: "{{ lookup('env', 'USER') }}"
-        force: yes
+#     - name: Create a default VSCode configuration
+#       template:
+#         src: templates/vscode-settings.json.j2
+#         dest: /Users/{{ lookup('env', 'USER') }}/Library/Application Support/Code/User/settings.json
+#         owner: "{{ lookup('env', 'USER') }}"
+#         force: yes
 
-    - name: Create a default VSCode keybinding configuration
-      template:
-        src: templates/vscode-keybindings.json.j2
-        dest: /Users/{{ lookup('env', 'USER') }}/Library/Application Support/Code/User/keybindings.json
-        owner: "{{ lookup('env', 'USER') }}"
-        force: yes
+#     - name: Create a default VSCode keybinding configuration
+#       template:
+#         src: templates/vscode-keybindings.json.j2
+#         dest: /Users/{{ lookup('env', 'USER') }}/Library/Application Support/Code/User/keybindings.json
+#         owner: "{{ lookup('env', 'USER') }}"
+#         force: yes
 
-    # Add something which ensures path is set here
-    - name: Install VSCode extensions
-      shell: code --install-extension {{ item }}
-      with_items:
-        - apollographql.vscode-apollo
-        - eamodio.gitlens
-        - ms-vscode-remote.vscode-remote-extensionpack
-        - richie5um2.vscode-sort-json
-        - Tyriar.sort-lines
-        - wholroyd.jinja
-        - streetsidesoftware.code-spell-checker
-        - github.vscode-pull-request-github
-        - amazonwebservices.aws-toolkit-vscode
-        - ms-dotnettools.vscode-dotnet-runtime
-        - ms-vscode.vscode-node-azure-pack
-        - ms-azuretools.vscode-docker
-        - github.remotehub
-        - golang.go
-        - ms-toolsai.jupyter
-        - ms-toolsai.jupyter-keymap
-        - davidanson.vscode-markdownlint
-        - esbenp.prettier-vscode
-        - argutec.argutec-azure-repos
-        - bencoleman.armview
-        - ms-vscode.azure-account
-        - ms-vscode.powershell
-        - ms-vscode.azurecli
-        - ms-kubernetes-tools.vscode-aks-tools
-        - ms-azuretools.vscode-logicapps
-        - ms-azuretools.vscode-azurelogicapps
-        - ms-azure-devops.azure-pipelines
-        - aaron-bond.better-comments
-        - donjayamanne.git-extension-pack
-        - codezombiech.gitignore
-        - hashicorp.terraform
-        - mongodb.mongodb-vscode
-        - ms-python.vscode-pylance
-        - ms-python.python
-        - redhat.vscode-yaml
+#     # Add something which ensures path is set here
+#     - name: Install VSCode extensions
+#       shell: code --install-extension {{ item }}
+#       with_items:
+#         - apollographql.vscode-apollo
+#         - eamodio.gitlens
+#         - ms-vscode-remote.vscode-remote-extensionpack
+#         - richie5um2.vscode-sort-json
+#         - Tyriar.sort-lines
+#         - wholroyd.jinja
+#         - streetsidesoftware.code-spell-checker
+#         - github.vscode-pull-request-github
+#         - amazonwebservices.aws-toolkit-vscode
+#         - ms-dotnettools.vscode-dotnet-runtime
+#         - ms-vscode.vscode-node-azure-pack
+#         - ms-azuretools.vscode-docker
+#         - github.remotehub
+#         - golang.go
+#         - ms-toolsai.jupyter
+#         - ms-toolsai.jupyter-keymap
+#         - davidanson.vscode-markdownlint
+#         - esbenp.prettier-vscode
+#         - argutec.argutec-azure-repos
+#         - bencoleman.armview
+#         - ms-vscode.azure-account
+#         - ms-vscode.powershell
+#         - ms-vscode.azurecli
+#         - ms-kubernetes-tools.vscode-aks-tools
+#         - ms-azuretools.vscode-logicapps
+#         - ms-azuretools.vscode-azurelogicapps
+#         - ms-azure-devops.azure-pipelines
+#         - aaron-bond.better-comments
+#         - donjayamanne.git-extension-pack
+#         - codezombiech.gitignore
+#         - hashicorp.terraform
+#         - mongodb.mongodb-vscode
+#         - ms-python.vscode-pylance
+#         - ms-python.python
+#         - redhat.vscode-yaml
 
-    - git:
-        repo: https://github.com/asdf-vm/asdf.git
-        dest: "/Users/{{ lookup('env', 'USER') }}/.asdf"
-        version: v0.8.1
+#     - git:
+#         repo: https://github.com/asdf-vm/asdf.git
+#         dest: "/Users/{{ lookup('env', 'USER') }}/.asdf"
+#         version: v0.8.1
 
-    - name: "Create a default asdf configuration"
-      template:
-        src: templates/.asdfrc.j2
-        dest: /Users/{{ lookup('env', 'USER') }}/.asdfrc
-        owner: "{{ lookup('env', 'USER') }}"
-        force: yes
+#     - name: "Create a default asdf configuration"
+#       template:
+#         src: templates/.asdfrc.j2
+#         dest: /Users/{{ lookup('env', 'USER') }}/.asdfrc
+#         owner: "{{ lookup('env', 'USER') }}"
+#         force: yes
 
-    - name: "Install asdf plugins"
-      shell: |
-        source /Users/{{ lookup('env', 'USER') }}/.asdf/asdf.sh
-        asdf plugin-add {{ item }} || exit 0
-      with_items:
-        - python
+#     - name: "Install asdf plugins"
+#       shell: |
+#         source /Users/{{ lookup('env', 'USER') }}/.asdf/asdf.sh
+#         asdf plugin-add {{ item }} || exit 0
+#       with_items:
+#         - python
 
     - name: "Install Default Python"
       shell: |
