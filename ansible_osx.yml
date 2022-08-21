@@ -35,6 +35,7 @@
         - openvpn-connect
         - powershell        
         - zoom
+        - microsoft-remote-desktop
 
     - name: "Install homebrew packages"
       community.general.homebrew:
